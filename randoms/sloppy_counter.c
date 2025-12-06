@@ -34,3 +34,15 @@ void init(counter_t *counter) {
     pthread_mutex_init(&counter->lmutex[i], NULL);
   }
 }
+
+void incr(counter_t *counter, short threadID, int threshold) {
+  pthread_mutex_lock(&counter->lmutex[threadID]);
+  counter->lcount[threadID]++;
+  if (counter->lcount[threadID] >= threshold) {
+    pthread_mutex_lock(&counter->gmutex);
+    counter->gcount = counter->lcount[threadID];
+    counter->lcount[threadID] = 0;
+    pthread_mutex_unlock(&counter->gmutex);
+  }
+  pthread_mutex_unlock(&counter->lmutex[threadID]);
+}
