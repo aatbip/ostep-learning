@@ -86,21 +86,24 @@ void run_threads(int n, counter_t *counter) {
 
 int main(void) {
   counter_t *counter = malloc(sizeof(*counter));
+  init(counter);
   if (!counter)
     return 1;
 
   double start = get_time_ms();
-  run_threads(1, counter);
+  run_threads(500, counter);
   double end = get_time_ms();
 
   // double start = get_time_ms();
-  // for (int i = 0; i < 2000000; i++) {
+  // for (int i = 0; i < 500000000; i++) {
   //   incr(counter);
   // }
   // double end = get_time_ms();
 
   printf("count: %d\n", getcount(counter));
   printf("time taken: %f\n", end - start);
+
+  free(counter);
 
   return 0;
 }
