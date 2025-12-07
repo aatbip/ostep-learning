@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 #define CPUTHREADS 12 // total threads in the cpu
-#define THRESHOLD 128
+#define THRESHOLD 64
 
 double get_time_ms() {
   struct timespec ts;
@@ -81,7 +81,7 @@ void run_threads(counter_t *counter, int n) {
   pthread_t *th = malloc(sizeof(pthread_t) * n);
   for (int i = 0; i < n; i++) {
     (arg + i)->threadID = i % CPUTHREADS;
-    // printf("threadid: %d\n", (arg + i)->threadID);
+    printf("threadid: %d\n", (arg + i)->threadID);
     (arg + i)->counter = counter;
     pthread_create(&th[i], NULL, routine, (void *)(arg + i));
   }
@@ -95,7 +95,7 @@ int main(void) {
   counter_t *counter = malloc(sizeof(*counter));
   init(counter);
   int start = get_time_ms();
-  run_threads(counter, 500);
+  run_threads(counter, 512);
   float end = get_time_ms();
   printf("counter: %d\n", get_global_counter(counter));
   printf("time taken: %f\n", end - start);

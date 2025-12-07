@@ -91,7 +91,7 @@ int main(void) {
     return 1;
 
   double start = get_time_ms();
-  run_threads(500, counter);
+  run_threads(512, counter);
   double end = get_time_ms();
 
   // double start = get_time_ms();
