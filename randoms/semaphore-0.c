@@ -2,6 +2,12 @@
  * We can use semaphore as a lock where we initialize the semaphore with X as 1.
  * sem_init($s, 0, X) where X = 1 which will act as a lock to protect critical section.*/
 
+/*In this program, we are using binary semaphore as a mutex, and also verifying if it works or not.
+ * We verify the working by adding the semaphore lock in the critical section and checking the output.
+ * Without semaphore lock, output is incorrect. We also check the performance of the semaphore lock
+ * with the mutex lock, and we found that mutex lock has a better performance because it doesn't need
+ * to access syscalls as often as semaphore does and also semaphore has more computation overhead.*/
+
 #include <pthread.h>
 #include <semaphore.h>
 #include <stdio.h>
