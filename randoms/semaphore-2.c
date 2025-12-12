@@ -10,7 +10,7 @@ int buffer[MAX];
 int pc = 0; // producer count
 int cc = 0; // consumer count
 
-sem_t p, c;
+sem_t p, c, mutex;
 
 void put(int n) {
   buffer[pc] = n;
@@ -34,4 +34,9 @@ void *consumer(void *arg) {
   return NULL;
 }
 
-int main(void) { return 0; }
+int main(void) {
+  sem_init(&p, 0, MAX);
+  sem_init(&c, 0, 0);
+  sem_init(&mutex, 0, 1);
+  return 0;
+}
