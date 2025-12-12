@@ -12,16 +12,24 @@ int cc = 0; // consumer count
 
 sem_t p, c;
 
-void *producer(void *arg) {
-  buffer[pc] = rand();
+void put(int n) {
+  buffer[pc] = n;
   pc = (pc + 1) % MAX;
-  pc++;
+}
+
+int get() {
+  int tmp = buffer[cc];
+  cc = (cc + 1) % MAX;
+  return tmp;
+}
+
+void *producer(void *arg) {
+  put(rand());
   return NULL;
 }
 
 void *consumer(void *arg) {
-  int tmp = buffer[cc];
-  cc = (cc + 1) % MAX;
+  int tmp = get();
   printf("consumed: %d\n", tmp);
   return NULL;
 }
