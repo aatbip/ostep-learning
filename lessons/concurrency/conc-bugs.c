@@ -1,0 +1,1 @@
+/* This program demonstrates the atomicity violation bug. */
