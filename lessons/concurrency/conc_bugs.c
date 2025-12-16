@@ -11,6 +11,10 @@ typedef struct sys {
 void *t1(void *arg) {
   sys_t *sys = (sys_t *)arg;
   if (sys->node) {
+    /* We are forcing context switch to occur at this time by running a time consuming long loop.
+     * Now, t2 will run and overwrite `node` to NULL which will bring seg fault error in fputs().*/
+    for (int i = 0; i < 100000; i++)
+      ;
     fputs(sys->node, stdout);
   }
   return NULL;
@@ -31,8 +35,8 @@ int main(void) {
   pthread_create(&th1, NULL, t1, (void *)sys);
   pthread_create(&th2, NULL, t2, (void *)sys);
 
-  pthread_join(th1, NULL);
   pthread_join(th2, NULL);
+  pthread_join(th1, NULL);
 
   return 0;
 }
