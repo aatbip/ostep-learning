@@ -28,7 +28,7 @@ void *t2(void *arg) {
 
 int main(void) {
   sys_t *sys = (sys_t *)malloc(sizeof(*sys));
-  sys->node = malloc(sizeof(*sys->node));
+  sys->node = malloc(sizeof(*sys->node) * 12);
   strcpy(sys->node, "working?\n");
 
   pthread_t th1, th2;
