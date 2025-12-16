@@ -17,6 +17,13 @@ void *init(void *arg) {
 
 void *append_print(void *arg) {
   sys_t *sys = (sys_t *)arg;
+  /* We can introduce a long running loop here so that kernel will
+   * context switch at this point to the init thread so that
+   * initialization of `node` completes. This is just a demonstration
+   * but not a method that should be employ for real. We will instead
+   * use CV. */
+  for (int i = 0; i < 100000; i++)
+    ;
   strcpy(sys->node, "hello");
   printf("node: %s\n", sys->node);
   return NULL;
