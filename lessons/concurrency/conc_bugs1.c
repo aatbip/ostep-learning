@@ -1,6 +1,5 @@
 /* This program demonstrates the order violation bug. */
 
-#include <bits/pthreadtypes.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,7 +11,7 @@ typedef struct sys {
 
 void *init(void *arg) {
   sys_t *sys = (sys_t *)arg;
-  sys = malloc(sizeof(*sys->node) * 12); // initialize sys->node
+  sys->node = malloc(sizeof(*sys->node) * 12); // initialize sys->node
   return NULL;
 }
 
