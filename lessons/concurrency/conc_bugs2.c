@@ -30,4 +30,16 @@ void *t2(void *arg) {
   return NULL;
 }
 
-int main(void) {}
+int main(void) {
+  pthread_t th1, th2;
+  pthread_create(&th1, NULL, t1, NULL);
+  pthread_create(&th2, NULL, t1, NULL);
+
+  pthread_join(th1, NULL);
+  pthread_join(th2, NULL);
+
+  printf("i: %d\n", i);
+  printf("j: %d\n", j);
+
+  return 0;
+}
