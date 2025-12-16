@@ -1,5 +1,7 @@
 /* This program demonstrates the order violation bug. */
 
+#include <bits/pthreadtypes.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -23,5 +25,12 @@ void *append_print(void *arg) {
 
 int main(void) {
   sys_t *sys = (sys_t *)malloc(sizeof(*sys));
+  pthread_t th1, th2;
+
+  pthread_create(&th1, NULL, init, (void *)sys);
+  pthread_create(&th2, NULL, append_print, (void *)sys);
+
+  pthread_join(th1, NULL);
+  pthread_join(th2, NULL);
   return 0;
 }
