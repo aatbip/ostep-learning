@@ -1,5 +1,6 @@
 /* This program demonstrates the order violation bug. */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -13,9 +14,14 @@ void *init(void *arg) {
   return NULL;
 }
 
+void *append_print(void *arg) {
+  sys_t *sys = (sys_t *)arg;
+  strcpy(sys->node, "hello");
+  printf("node: %s\n", sys->node);
+  return NULL;
+}
+
 int main(void) {
   sys_t *sys = (sys_t *)malloc(sizeof(*sys));
-  sys->node = malloc(sizeof(*sys->node) * 12);
-  strcpy(sys->node, "hello");
   return 0;
 }
