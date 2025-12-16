@@ -2,27 +2,30 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct sys {
-  int node;
+  char *node;
 } sys_t;
 
 void *t1(void *arg) {
   sys_t *sys = (sys_t *)arg;
   if (sys->node) {
-    printf("node: %d\n", sys->node);
+    fputs(sys->node, stdout);
   }
   return NULL;
 }
 
 void *t2(void *arg) {
   sys_t *sys = (sys_t *)arg;
-  sys->node = 0;
+  sys->node = NULL;
   return NULL;
 }
 
 int main(void) {
   sys_t *sys = (sys_t *)malloc(sizeof(*sys));
+  sys->node = malloc(sizeof(*sys->node));
+  strcpy(sys->node, "working?\n");
 
   pthread_t th1, th2;
   pthread_create(&th1, NULL, t1, (void *)sys);
