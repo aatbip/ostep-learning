@@ -1,5 +1,7 @@
 /* This program demonstrates the atomicity violation bug. */
+#include <pthread.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct sys {
   int node;
@@ -7,8 +9,27 @@ typedef struct sys {
 
 void *t1(void *arg) {
   sys_t *sys = (sys_t *)arg;
-  printf("node: %d\n", sys->node);
+  if (sys->node) {
+    printf("node: %d\n", sys->node);
+  }
   return NULL;
 }
 
-int main(void) { sys_t sys; }
+void *t2(void *arg) {
+  sys_t *sys = (sys_t *)arg;
+  sys->node = 0;
+  return NULL;
+}
+
+int main(void) {
+  sys_t *sys = (sys_t *)malloc(sizeof(*sys));
+
+  pthread_t th1, th2;
+  pthread_create(&th1, NULL, t1, (void *)sys);
+  pthread_create(&th2, NULL, t2, (void *)sys);
+
+  pthread_join(th1, NULL);
+  pthread_join(th2, NULL);
+
+  return 0;
+}
