@@ -18,4 +18,5 @@ int main(void) {
   c = fsync(fd);
   assert(c == 0);
   printf("done!");
+  rename("foo", "bar");
 }
