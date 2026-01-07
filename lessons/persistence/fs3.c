@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 int main(void) {
@@ -18,5 +19,11 @@ int main(void) {
   c = fsync(fd);
   assert(c == 0);
   printf("done!");
-  rename("foo", "bar");
+  // rename("foo", "bar");
+
+  struct stat st;
+
+  stat("foo", &st);
+
+  printf("inode: %ld\n", st.st_ino);
 }
