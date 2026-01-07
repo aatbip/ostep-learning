@@ -1,0 +1,17 @@
+--------------------------
+ # File system interface 
+--------------------------
+
+-> In UNIX systems, two abstractions have been developed in the virtualization of storage: Files and Directories
+-> The file system interface provides APIs to interact with files and directories, which are abstractions over persistent storage.
+-> Files and directories are represented by inodes, which have unique inode numbers; files or directories are stored in directories 
+   as mappings from names to inode numbers i.e. (name, inode).
+-> In UNIX systems, root directory is represented by the symbol '/'.
+-> Files in the directory tree can be referred to using absolute pathnames (e.g., /foo/bar/foo.txt) or relative pathnames.
+-> UNIX follows a file-oriented interface where many system resources are accessed via file descriptors.
+
+
+
+
+
+
