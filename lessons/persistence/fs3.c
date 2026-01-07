@@ -26,4 +26,6 @@ int main(void) {
   stat("foo", &st);
 
   printf("inode: %ld\n", st.st_ino);
+
+  unlink("foo");
 }
