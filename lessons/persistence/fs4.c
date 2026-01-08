@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 int main(void) {
+  mkdir("mydir", 0777);
   DIR *dp = opendir("mydir");
   struct dirent *d;
   while ((d = readdir(dp)) != NULL) {
@@ -16,7 +17,9 @@ int main(void) {
     printf("(dirent)name: %s\n", d->d_name);
     printf("(st)inode: %ld\n", st.st_ino);
     printf("(dirent)inode: %ld\n", d->d_ino);
+    rmdir(path);
   }
+  rmdir("mydir");
   closedir(dp);
   return 0;
 }
