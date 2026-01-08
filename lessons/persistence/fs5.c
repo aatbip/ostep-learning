@@ -23,4 +23,7 @@ int main(void) {
     }
     i++;
   }
+  struct stat st;
+  stat("links-test/file0", &st);
+  printf("link count: %ld\n", st.st_nlink);
 }
