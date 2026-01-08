@@ -1,3 +1,6 @@
+/*In this program, we use syscalls to create, read, and remove directory. We will also use `dirent` struct and `stat`
+ * struct to get the metadata of the directory and files.*/
+
 #include <assert.h>
 #include <dirent.h>
 #include <stdio.h>
