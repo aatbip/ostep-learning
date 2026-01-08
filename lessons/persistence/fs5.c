@@ -29,7 +29,8 @@ int main(void) {
   if ((mkdir("links-test", 0777)) == -1) {
     perror("mkdir");
   }
-  if ((open("links-test/file0", O_CREAT | O_WRONLY, 0777)) == -1) {
+  int fd = open("links-test/file0", O_CREAT | O_WRONLY, 0777);
+  if (fd == -1) {
     perror("open");
   }
   int i = 1;
@@ -46,5 +47,6 @@ int main(void) {
     perror("stat");
   };
   printf("link count: %ld\n", st.st_nlink);
+  close(fd);
   closedir(dp);
 }
