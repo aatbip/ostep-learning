@@ -26,26 +26,25 @@ int main(void) {
     }
   }
 
-  int ch = mkdir("links-test", 0777);
-  if (ch == -1) {
+  if ((mkdir("links-test", 0777)) == -1) {
     perror("mkdir");
   }
-  ch = open("links-test/file0", O_CREAT | O_WRONLY);
-  if (ch == -1) {
+  if ((open("links-test/file0", O_CREAT | O_WRONLY, 0777)) == -1) {
     perror("open");
   }
   int i = 1;
   while (i <= 5) {
     char n[256];
     snprintf(n, sizeof(n), "links-test/file%d", i);
-    ch = link("links-test/file0", n);
-    if (ch == -1) {
+    if ((link("links-test/file0", n)) == -1) {
       perror("link");
     }
     i++;
   }
   struct stat st;
-  stat("links-test/file0", &st);
+  if ((stat("links-test/file0", &st)) == -1) {
+    perror("stat");
+  };
   printf("link count: %ld\n", st.st_nlink);
   closedir(dp);
 }
