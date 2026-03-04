@@ -1,3 +1,6 @@
+/*This program implements similar function to `pthread_join` using conditional variable.
+ * */
+
 #include <pthread.h>
 #include <stdio.h>
 
@@ -26,8 +29,8 @@ int main(void) {
   printf("start\n");
   pthread_t th;
   pthread_create(&th, NULL, child, NULL);
-  for (long i = 0; i < 20; i++)
-    printf("i: %ld\n", i);
+  // for (long i = 0; i < 20; i++)
+  //   printf("i: %ld\n", i);
   th_join();
   printf("end\n");
   return 0;
