@@ -15,6 +15,7 @@ pthread_cond_t cv_put = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void put(int v) {
+  printf("putting\n");
   count = 1;
   buffer = v;
 }
@@ -39,6 +40,7 @@ void *producer(void *arg) {
 }
 
 void *consumer(void *arg) {
+  intptr_t n = (intptr_t)arg;
   while (1) {
     pthread_mutex_lock(&mutex);
     while (count == 0) {
@@ -48,6 +50,8 @@ void *consumer(void *arg) {
     pthread_cond_signal(&cv_put);
     pthread_mutex_unlock(&mutex);
     printf("%d\n", tmp);
+    if (tmp == n - 1)
+      break;
   }
   return NULL;
 }
@@ -56,7 +60,7 @@ int main(void) {
   pthread_t th_prod;
   pthread_t th_cons;
   pthread_create(&th_prod, NULL, producer, (void *)10);
-  pthread_create(&th_cons, NULL, consumer, NULL);
+  pthread_create(&th_cons, NULL, consumer, (void *)10);
   pthread_join(th_prod, NULL);
   pthread_join(th_cons, NULL);
   return 0;
