@@ -8,6 +8,7 @@ typedef struct sys {
   char *node;
 } sys_t;
 
+// Atomicity violation bugs can be avoided using mutex. Compiling with the mutex code should not cause seg fault error.
 // pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void *t1(void *arg) {
