@@ -8,8 +8,11 @@ typedef struct sys {
   char *node;
 } sys_t;
 
+// pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
 void *t1(void *arg) {
   sys_t *sys = (sys_t *)arg;
+  // pthread_mutex_lock(&mutex);
   if (sys->node) {
     /* We are forcing context switch to occur at this time by running a time consuming long loop.
      * Now, t2 will run and overwrite `node` to NULL which will bring seg fault error in fputs().*/
@@ -17,12 +20,15 @@ void *t1(void *arg) {
       ;
     fputs(sys->node, stdout);
   }
+  // pthread_mutex_unlock(&mutex);
   return NULL;
 }
 
 void *t2(void *arg) {
   sys_t *sys = (sys_t *)arg;
+  // pthread_mutex_lock(&mutex);
   sys->node = NULL;
+  // pthread_mutex_unlock(&mutex);
   return NULL;
 }
 
